@@ -5,7 +5,7 @@ from aiogram import Router
 from utils.get_admins import get_admin_ids
 from filters.filters import IsAdmin
 from keyboards.reply_keyboards import main_kb
-from lexicon.lexicon_ru import LEXICON_RU
+from lexicon import LEXICON_EN
 
 router = Router()
 admin_ids = get_admin_ids()
@@ -14,4 +14,4 @@ admin_ids = get_admin_ids()
 
 @router.message(Command(commands='admin'), IsAdmin(admin_ids))
 async def process_help_command(message: Message):
-    await message.answer(text=LEXICON_RU['admin'], reply_markup = main_kb)
+    await message.answer(text=LEXICON_EN['admin'], reply_markup = main_kb)

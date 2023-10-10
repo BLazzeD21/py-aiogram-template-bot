@@ -1,1 +1,1 @@
-from .lexicon_ru import *
+from .lexicon_en import *

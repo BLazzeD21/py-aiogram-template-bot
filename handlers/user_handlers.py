@@ -1,9 +1,10 @@
-from aiogram.types import Message
+from aiogram.types import CallbackQuery, Message
 from aiogram.filters import Command, CommandStart
 from aiogram import Router, F
 
 from keyboards.reply_keyboards import main_kb
-from lexicon.lexicon_ru import LEXICON_RU
+from keyboards.inline_keyboards import main_inline_kb, info_inline_kb
+from lexicon import LEXICON_EN
 
 router = Router()
 
@@ -11,27 +12,72 @@ router = Router()
 
 @router.message(CommandStart())
 async def process_start_command(message: Message):
-    await message.answer(text=LEXICON_RU['/start'], reply_markup = main_kb)
+    await message.answer(text=LEXICON_EN['/start'], reply_markup = main_kb)
 
 @router.message(Command(commands='help'))
 async def process_help_command(message: Message):
-    await message.answer(text=LEXICON_RU['/help'], reply_markup = main_kb)
+    await message.answer(text=LEXICON_EN['/help'], reply_markup = main_kb)
 
 # ------------- Button handlers from ReplyKeyboards -------------
 
-@router.message(F.text == LEXICON_RU['first_button'])
-async def process_help_command(message: Message):
-    await message.answer(text="Action after clicking <i>button 1</i>", reply_markup = main_kb)
+@router.message(F.text == LEXICON_EN['first_button'])
+async def process_first_button_press(message: Message):
+    await message.answer(text=LEXICON_EN['button_1_pressed'], reply_markup = main_inline_kb)
 
-@router.message(F.text == LEXICON_RU['second_button'])
-async def process_help_command(message: Message):
-    await message.answer(text="Action after clicking <i>button 2</i>", reply_markup = main_kb)
+@router.message(F.text == LEXICON_EN['second_button'])
+async def process_second_button_press(message: Message):
+    await message.answer(text=LEXICON_EN['button_2_pressed'], reply_markup = main_inline_kb)
 
-@router.message(F.text == LEXICON_RU['third_button'])
-async def process_help_command(message: Message):
-    await message.answer(text="Action after clicking <i>button 3</i>", reply_markup = main_kb)
+@router.message(F.text == LEXICON_EN['third_button'])
+async def process_third_button_press(message: Message):
+    await message.answer(text=LEXICON_EN['button_3_pressed'], reply_markup = main_inline_kb)
 
-@router.message(F.text == LEXICON_RU['fourth_button'])
-async def process_help_command(message: Message):
-    await message.answer(text="Action after clicking <i>button 4</i>", reply_markup = main_kb)
+@router.message(F.text == LEXICON_EN['fourth_button'])
+async def process_fourth_button_press(message: Message):
+    await message.answer(text=LEXICON_EN['button_4_pressed'], reply_markup = main_inline_kb)
 
+# ---------------- Button handlers from Callbacks ----------------
+
+@router.callback_query(F.data == 'first_inline_button_pressed')
+async def process_first_inline_button_press(callback: CallbackQuery):
+    if callback.message.text != LEXICON_EN['inline_button_1_pressed']:
+        await callback.message.edit_text(
+            text=LEXICON_EN['inline_button_1_pressed'],
+            reply_markup=info_inline_kb
+        )
+    await callback.answer(text=LEXICON_EN['inline_button_1_pressed'], show_alert=True)
+
+@router.callback_query(F.data == 'second_inline_button_pressed')
+async def process_second_inline_button_press(callback: CallbackQuery):
+    if callback.message.text != LEXICON_EN['inline_button_2_pressed']:
+        await callback.message.edit_text(
+            text=LEXICON_EN['inline_button_2_pressed'],
+            reply_markup=info_inline_kb
+        )
+    await callback.answer(text=LEXICON_EN['inline_button_2_pressed'], show_alert=True)
+
+@router.callback_query(F.data == 'third_inline_button_pressed')
+async def process_third_inline_button_press(callback: CallbackQuery):
+    if callback.message.text != LEXICON_EN['inline_button_3_pressed']:
+        await callback.message.edit_text(
+            text=LEXICON_EN['inline_button_3_pressed'],
+            reply_markup=info_inline_kb
+        )
+    await callback.answer(text=LEXICON_EN['inline_button_3_pressed'])
+
+@router.callback_query(F.data == 'fourth_inline_button_pressed')
+async def process_fourth_inline_button_press(callback: CallbackQuery):
+    if callback.message.text != LEXICON_EN['inline_button_4_pressed']:
+        await callback.message.edit_text(
+            text=LEXICON_EN['inline_button_4_pressed'],
+            reply_markup=info_inline_kb
+        )
+    await callback.answer(text=LEXICON_EN['inline_button_4_pressed'])
+
+@router.callback_query(F.data == 'back_btn')
+async def process_back_button_press(callback: CallbackQuery):
+    await callback.message.edit_text(
+        text=LEXICON_EN['click'],
+        reply_markup=main_inline_kb
+    )
+    await callback.answer()
