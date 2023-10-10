@@ -23,4 +23,9 @@
 
 - `deactivate`
 
+6. How to launch a bot:
+
+- For windows - `py start.py`
+- For macOS & Linux - `python3 start.py`
+
 
