@@ -1,9 +1,3 @@
-LEXICON_COMMANDS_EN: dict[str, str] = {
-    '/start': 'desription',
-    '/help': 'desription',
-    '/admin': 'desription',
-}
-
 LEXICON_EN: dict[str, str] = {
     '/start': 'start',
     '/help': 'help',
@@ -27,7 +21,7 @@ LEXICON_EN: dict[str, str] = {
     'github': 'Github repository',
     'aiogram': 'Aiogram documentation',
     'back': 'Come back'
-}
+    }
 
 LINKS: dict[str, str] = {
     'github': 'https://github.com/BLazzeD21/py-aiogram-template-bot',
