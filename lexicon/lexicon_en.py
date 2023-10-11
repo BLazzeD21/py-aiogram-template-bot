@@ -23,11 +23,6 @@ LEXICON_EN: dict[str, str] = {
     'back': 'Come back'
     }
 
-LINKS: dict[str, str] = {
-    'github': 'https://github.com/BLazzeD21/py-aiogram-template-bot',
-    'aiogram': 'https://aiogram.dev/',
-}
-
 MAIN_BUTTONS: dict[str, str] = {
     'first_inline_button_pressed': 'Button 1',
     'second_inline_button_pressed': 'Button 2',
