@@ -1,4 +1,4 @@
-LEXICON_EN: dict[str, str] = {
+LEXICON: dict[str, str] = {
     '/start': 'start',
     '/help': 'help',
     'other': 'other',

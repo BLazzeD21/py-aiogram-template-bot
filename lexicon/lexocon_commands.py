@@ -1,4 +1,4 @@
-LEXICON_COMMANDS_EN: dict[str, str] = {
+LEXICON_COMMANDS: dict[str, str] = {
     '/start': 'desription',
     '/help': 'desription',
     '/admin': 'desription',

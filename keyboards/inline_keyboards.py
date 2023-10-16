@@ -1,22 +1,22 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from keyboards.create_inline_kb import create_inline_kb
 
-from lexicon import LEXICON_EN, MAIN_BUTTONS, LINKS
+from lexicon import LEXICON, MAIN_BUTTONS, LINKS
 
 # ---------------------- Creating Buttons ----------------------
 
 aiogram_btn = InlineKeyboardButton(
-        text=LEXICON_EN['aiogram'],
+        text=LEXICON['aiogram'],
         url=LINKS['aiogram'],
     )
 
 github_btn = InlineKeyboardButton(
-        text=LEXICON_EN['github'],
+        text=LEXICON['github'],
         url=LINKS['github'],
     )
 
 back_btn = InlineKeyboardButton(
-        text=LEXICON_EN['back'],
+        text=LEXICON['back'],
         callback_data="back_btn",
     )
 
