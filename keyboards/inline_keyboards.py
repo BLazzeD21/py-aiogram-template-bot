@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from keyboards.create_inline_kb import create_inline_kb
 
-from lexicon import LEXICON, MAIN_BUTTONS, LINKS
+from lexicon import LEXICON, MAIN_BUTTONS, SEX_BUTTONS, LINKS
 
 # ---------------------- Creating Buttons ----------------------
 
@@ -24,7 +24,8 @@ back_btn = InlineKeyboardButton(
 
 info_inline_kb = InlineKeyboardMarkup(
         inline_keyboard=[
-            [aiogram_btn, github_btn],
+            [github_btn],
+            [aiogram_btn],
             [back_btn],
         ]
     )
@@ -32,4 +33,6 @@ info_inline_kb = InlineKeyboardMarkup(
 # ------ Creating a keyboard menu using a special function ------
 
 
-main_inline_kb = create_inline_kb(2, **MAIN_BUTTONS)
+main_inline_kb = create_inline_kb(1, **MAIN_BUTTONS)
+
+sex_inline_kb = create_inline_kb(1, **SEX_BUTTONS)
