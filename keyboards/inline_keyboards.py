@@ -1,22 +1,21 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from keyboards.create_inline_kb import create_inline_kb
+from keyboards.create_inline_kb import create_inline_kb, create_profiles_keyboard
 
-from lexicon import LEXICON_EN, MAIN_BUTTONS, LINKS
-
+from lexicon import LEXICON, MAIN_BUTTONS, SEX_BUTTONS, LINKS, BACK, BACK_PROFILES
 # ---------------------- Creating Buttons ----------------------
 
 aiogram_btn = InlineKeyboardButton(
-        text=LEXICON_EN['aiogram'],
+        text=LEXICON['aiogram'],
         url=LINKS['aiogram'],
     )
 
 github_btn = InlineKeyboardButton(
-        text=LEXICON_EN['github'],
+        text=LEXICON['github'],
         url=LINKS['github'],
     )
 
 back_btn = InlineKeyboardButton(
-        text=LEXICON_EN['back'],
+        text=LEXICON['back'],
         callback_data="back_btn",
     )
 
@@ -24,7 +23,8 @@ back_btn = InlineKeyboardButton(
 
 info_inline_kb = InlineKeyboardMarkup(
         inline_keyboard=[
-            [aiogram_btn, github_btn],
+            [github_btn],
+            [aiogram_btn],
             [back_btn],
         ]
     )
@@ -32,4 +32,10 @@ info_inline_kb = InlineKeyboardMarkup(
 # ------ Creating a keyboard menu using a special function ------
 
 
-main_inline_kb = create_inline_kb(2, **MAIN_BUTTONS)
+main_inline_kb = create_inline_kb(1, **MAIN_BUTTONS)
+
+sex_inline_kb = create_inline_kb(1, **SEX_BUTTONS)
+
+back_inline_kb = create_inline_kb(1, **BACK)
+
+profiles_back_inline_kb = create_inline_kb(1, **BACK_PROFILES)
