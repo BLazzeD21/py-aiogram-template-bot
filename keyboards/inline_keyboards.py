@@ -1,8 +1,7 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from keyboards.create_inline_kb import create_inline_kb
+from keyboards.create_inline_kb import create_inline_kb, create_profiles_keyboard
 
-from lexicon import LEXICON, MAIN_BUTTONS, SEX_BUTTONS, LINKS
-
+from lexicon import LEXICON, MAIN_BUTTONS, SEX_BUTTONS, LINKS, BACK, BACK_PROFILES
 # ---------------------- Creating Buttons ----------------------
 
 aiogram_btn = InlineKeyboardButton(
@@ -36,3 +35,7 @@ info_inline_kb = InlineKeyboardMarkup(
 main_inline_kb = create_inline_kb(1, **MAIN_BUTTONS)
 
 sex_inline_kb = create_inline_kb(1, **SEX_BUTTONS)
+
+back_inline_kb = create_inline_kb(1, **BACK)
+
+profiles_back_inline_kb = create_inline_kb(1, **BACK_PROFILES)
