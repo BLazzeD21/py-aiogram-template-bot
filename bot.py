@@ -11,7 +11,6 @@ async def main() -> None:
 
   BOT_TOKEN: str = configuration.tg_bot.token
   
-  # Инициализируем Redis
   redis = Redis(host='localhost')
 
   bot: Bot = Bot(token=BOT_TOKEN, parse_mode="html")

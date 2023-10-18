@@ -11,3 +11,4 @@ async def set_main_menu(bot: Bot):
       ) for command, description in LEXICON_COMMANDS.items()
     ]
   await bot.set_my_commands(main_menu_commands)
+  print("Commands installed successfully")

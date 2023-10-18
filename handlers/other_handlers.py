@@ -11,3 +11,7 @@ router = Router()
 @router.message(StateFilter(default_state))
 async def send_echo(message: Message):
   await message.answer(text=LEXICON['other'])
+
+@router.message(~StateFilter(default_state))
+async def send_echo(message: Message):
+  await message.answer(text=LEXICON['registering'])
