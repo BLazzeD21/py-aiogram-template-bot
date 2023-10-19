@@ -1,9 +1,11 @@
-FROM python:3.10
+FROM python:3.11.6-slim-bullseye
 
-COPY . /bot
+RUN apt-get update && apt-get install -y redis-server
 
-WORKDIR /bot
+COPY requirements.txt /tmp/
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-RUN pip install -r requirements.txt
+COPY . /app
+WORKDIR /app
 
-CMD ["python3","start.py"]
+CMD service redis-server start && python3 start.py
