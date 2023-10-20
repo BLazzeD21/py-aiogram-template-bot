@@ -22,7 +22,7 @@ This bot was created for educational purposes and is a template with examples of
 # Bot structure 📁
 Folder  | Description
 ------------- | -------------
-config_data  | Configuration files, database
+config  | Configuration files, database
 filters  | Admin filter
 handlers  | Handlers of commands and callbacks
 keyboards | Dynamically generated keyboards
