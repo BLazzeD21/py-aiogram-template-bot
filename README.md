@@ -3,9 +3,9 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-# 📄 Template for creating a telegram bot using the aiogram framework
+# Template for creating a telegram bot using the aiogram framework
 This bot was created for educational purposes and is a template with examples of using various functionality of the aiogram 3 framework for creating telegram bots.</br>
-### This template has:
+## This template has:
 
 :white_medium_square: virtual environment,</br>
 :white_medium_square: custom filters,</br>
@@ -19,8 +19,21 @@ This bot was created for educational purposes and is a template with examples of
 :white_medium_square: callback Factory,</br>
 :white_medium_square: FSM based on redis.</br>
 
+# Bot structure 📁
+Folder  | Description
+------------- | -------------
+config_data  | Configuration files, database
+filters  | Admin filter
+handlers  | Handlers of commands and callbacks
+keyboards | Dynamically generated keyboards
+lexicon  | Dictionary with all text
+logs | Storage of all logs
+middlewares  | Middlewares for antispam and etc.
+models  | Modules for interacting with the database
+states  | Modules that describe classes that reflect the possible states of<br>users during interaction with the bot, for the implementation of FSM
+utils  | Functions that run multiple times
 
-# 🛠 Development
+# Development 🛠
 
 ### 1. To create a virtual environment:
 
@@ -56,7 +69,7 @@ deactivate
 - For windows - `py start.py`
 - For macOS & Linux - `python3 start.py`
 
-# 💾 Deploying a bot
+# Deploying a bot 💾
 
 ### 1. Docker installation
    **❗️ Important**
