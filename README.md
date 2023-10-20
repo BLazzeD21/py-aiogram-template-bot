@@ -4,20 +4,20 @@
 ![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 # Template for creating a telegram bot using the aiogram framework
-This bot was created for educational purposes and is a template with examples of using various functionality of the aiogram 3 framework for creating telegram bots.</br>
-## This template has:
+This bot was created for educational purposes and is a template with examples of using various functionality of the aiogram 3 framework for creating telegram bots. In this example, a bot with a registration form is implemented. You can register, view your profile and view the profiles of other users. Try, study, change existing functionality and add new ones!
 
-:white_medium_square: virtual environment,</br>
-:white_medium_square: custom filters,</br>
-:white_medium_square: environment variables,</br>
-:white_medium_square: bot configuration,</br>
-:white_medium_square: strict modularity,</br>
-:white_medium_square: routers,</br>
-:white_medium_square: replyKeyboards,</br>
-:white_medium_square: inlineKeyboards,</br>
-:white_medium_square: setMyCommands,</br>
-:white_medium_square: callback Factory,</br>
-:white_medium_square: FSM based on redis.</br>
+**This template has:**
+- virtual environment,</br>
+- custom filters,</br>
+- environment variables,</br>
+- bot configuration,</br>
+- strict modularity,</br>
+- routers,</br>
+- replyKeyboards,</br>
+- inlineKeyboards,</br>
+- setMyCommands,</br>
+- callback Factory,</br>
+- FSM based on redis.</br>
 
 # Bot structure 📁
 Folder  | Description
