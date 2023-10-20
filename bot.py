@@ -6,25 +6,30 @@ from keyboards.set_menu import set_main_menu
 
 import handlers
 
-async def main() -> None:  
-  configuration: Config = load_config(".env")
 
-  BOT_TOKEN: str = configuration.tg_bot.token
-  
-  redis = Redis(host='localhost')
+async def main() -> None:
+    configuration: Config = load_config(".env")
 
-  bot: Bot = Bot(token=BOT_TOKEN, parse_mode="html")
+    BOT_TOKEN: str = configuration.tg_bot.token
 
-  storage = RedisStorage(redis=redis)
+    redis = Redis(
+        host=configuration.db.redis_host,
+        port=configuration.db.redis_port,
+        db=configuration.db.redis_db,
+    )
 
-  dp: Dispatcher = Dispatcher(bot=bot, configuration=configuration, storage=storage)
+    bot: Bot = Bot(token=BOT_TOKEN, parse_mode="html")
 
-  dp.startup.register(set_main_menu)
+    storage = RedisStorage(redis=redis)
 
-  dp.include_router(handlers.admin_handlers.router)
-  dp.include_router(handlers.user_handlers.router)
-  dp.include_router(handlers.form_handlers.router)
-  dp.include_router(handlers.other_handlers.router)
+    dp: Dispatcher = Dispatcher(bot=bot, configuration=configuration, storage=storage)
 
-  await bot.delete_webhook(drop_pending_updates=True)
-  await dp.start_polling(bot)
+    dp.startup.register(set_main_menu)
+
+    dp.include_router(handlers.admin_handlers.router)
+    dp.include_router(handlers.user_handlers.router)
+    dp.include_router(handlers.form_handlers.router)
+    dp.include_router(handlers.other_handlers.router)
+
+    await bot.delete_webhook(drop_pending_updates=True)
+    await dp.start_polling(bot)

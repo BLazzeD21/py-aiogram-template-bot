@@ -83,9 +83,7 @@ async def incorrect_age(message: Message):
     await message.answer(text=LEXICON["incorrect_age"], reply_markup=cancel_kb)
 
 
-@router.callback_query(
-    StateFilter(FSMRegistration.fill_gender), F.data.in_(["male", "female"])
-)
+@router.callback_query(StateFilter(FSMRegistration.fill_gender), F.data.in_(["male", "female"]))
 async def process_gender_press(callback: CallbackQuery, state: FSMContext):
     await state.update_data(gender=callback.data)
     await callback.message.delete()
@@ -98,9 +96,7 @@ async def incorrect_gender(message: Message):
     await message.answer(text=LEXICON["incorrect_gender"], reply_markup=cancel_kb)
 
 
-@router.message(
-    StateFilter(FSMRegistration.fill_description), lambda x: 1 <= len(x.text) <= 250
-)
+@router.message(StateFilter(FSMRegistration.fill_description), lambda x: 1 <= len(x.text) <= 250)
 async def process_descr_sent(message: Message, state: FSMContext):
     await state.update_data(description=message.text)
     await message.answer(text=LEXICON["send_photo"], reply_markup=cancel_kb)
@@ -112,12 +108,8 @@ async def incorrect_descr(message: Message):
     await message.answer(text=LEXICON["incorrect_descr"], reply_markup=cancel_kb)
 
 
-@router.message(
-    StateFilter(FSMRegistration.upload_photo), F.photo[-1].as_("largest_photo")
-)
-async def process_photo_sent(
-    message: Message, state: FSMContext, largest_photo: PhotoSize
-):
+@router.message(StateFilter(FSMRegistration.upload_photo), F.photo[-1].as_("largest_photo"))
+async def process_photo_sent(message: Message, state: FSMContext, largest_photo: PhotoSize):
     await state.update_data(
         photo_unique_id=largest_photo.file_unique_id,
         photo_id=largest_photo.file_id,
