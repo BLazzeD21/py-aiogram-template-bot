@@ -11,6 +11,7 @@ router = Router()
 
 # ---------------------- Command handlers ----------------------
 
-@router.message(Command(commands='admin'), IsAdmin(), StateFilter(default_state))
+
+@router.message(Command(commands="admin"), IsAdmin(), StateFilter(default_state))
 async def process_help_command(message: Message):
-    await message.answer(text=LEXICON['admin'], reply_markup = main_kb)
+    await message.answer(text=LEXICON["admin"], reply_markup=main_kb)

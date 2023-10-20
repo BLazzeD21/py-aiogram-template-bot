@@ -14,13 +14,12 @@ class Config:
 
 
 def load_config(path: str | None) -> Config:
-
     env: Env = Env()
     env.read_env(path)
 
     return Config(
         tg_bot=TgBot(
-            token=env('BOT_TOKEN'),
-            admin_ids=env.list('ADMIN_IDS', subcast = int),
+            token=env("BOT_TOKEN"),
+            admin_ids=env.list("ADMIN_IDS", subcast=int),
         )
     )

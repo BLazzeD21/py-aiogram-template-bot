@@ -8,10 +8,12 @@ from lexicon import LEXICON
 
 router = Router()
 
+
 @router.message(StateFilter(default_state))
 async def send_echo(message: Message):
-  await message.answer(text=LEXICON['other'])
+    await message.answer(text=LEXICON["other"])
+
 
 @router.message(~StateFilter(default_state))
 async def send_echo(message: Message):
-  await message.answer(text=LEXICON['registering'])
+    await message.answer(text=LEXICON["registering"])
