@@ -1,7 +1,7 @@
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.redis import RedisStorage, Redis
 
-from config_data.config import Config, load_config
+from config.config import Config, load_config
 from keyboards.set_menu import set_main_menu
 
 import handlers
