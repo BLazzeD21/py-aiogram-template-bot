@@ -4,7 +4,6 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from lexicon import LEXICON
 from keyboards.profiles_callbackFactory import ProfilesCallbackFactory
 
-
 def create_inline_kb(width: int, *args: str, **kwargs: str) -> InlineKeyboardMarkup:
     kb_builder = InlineKeyboardBuilder()
 
@@ -28,16 +27,21 @@ def create_inline_kb(width: int, *args: str, **kwargs: str) -> InlineKeyboardMar
     return kb_builder.as_markup()
 
 
-def create_profiles_keyboard(user_dict: dict) -> InlineKeyboardMarkup:
+def create_profiles_keyboard(database: dict) -> InlineKeyboardMarkup:
     profiles_kb_builder = InlineKeyboardBuilder()
+    profiles = database.get_profiles()
+    if(profiles):
+        for user in profiles:
+            callback_data = ProfilesCallbackFactory(user_id=str(user[1])).pack()
+            text = f'{user[2]}\'s profile'
 
-    for key in user_dict.keys():
-        callback_data = ProfilesCallbackFactory(user_id=str(key)).pack()
-        text = f'{user_dict[key]["username"]}\'s profile'
-
+            profiles_kb_builder.row(
+                InlineKeyboardButton(text=text, callback_data=callback_data)
+            )
+    else:
         profiles_kb_builder.row(
-            InlineKeyboardButton(text=text, callback_data=callback_data)
-        )
+                InlineKeyboardButton(text='No', callback_data='no_users')
+            )
 
     profiles_kb_builder.row(
         InlineKeyboardButton(text=LEXICON["back"], callback_data="back_btn")

@@ -8,8 +8,6 @@ from keyboards.reply_keyboards import main_kb, cancel_kb
 from keyboards.inline_keyboards import sex_inline_kb, back_inline_kb, registration_inline_kb, profile_inline_kb
 from lexicon import LEXICON
 from states import FSMRegistration
-from models import user_dict
-from filters import ExistProduct
 
 
 router = Router()

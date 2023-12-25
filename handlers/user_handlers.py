@@ -15,7 +15,6 @@ from keyboards.inline_keyboards import (
 from keyboards.create_inline_kb import create_profiles_keyboard
 from keyboards.profiles_callbackFactory import ProfilesCallbackFactory
 from lexicon import LEXICON, LEXICON_COMMANDS
-from models import user_dict
 
 router = Router()
 
@@ -65,7 +64,7 @@ async def process_info_button_press(callback: CallbackQuery):
 @router.callback_query(F.data == "profile_button", StateFilter(default_state))
 async def process_profile_button_press(callback: CallbackQuery, database):
     await callback.message.delete()
-    
+
     user_id = callback.message.chat.id
     await show_user_profile(callback.message, user_id, database)
 
@@ -80,8 +79,8 @@ async def process_profile_button_press(callback: CallbackQuery, state: FSMContex
 
 
 @router.callback_query(F.data.in_(["profiles_back_btn", "profiles_button"]), StateFilter(default_state))
-async def process_profile_button_press(callback: CallbackQuery):
-    profiles_kb = create_profiles_keyboard(user_dict)
+async def process_profile_button_press(callback: CallbackQuery, database):
+    profiles_kb = create_profiles_keyboard(database)
 
     await callback.message.answer(text=LEXICON["select_account"], reply_markup=profiles_kb)
 
@@ -90,22 +89,9 @@ async def process_profile_button_press(callback: CallbackQuery):
 
 
 @router.callback_query(ProfilesCallbackFactory.filter())
-async def process_category_press(callback: CallbackQuery, callback_data: ProfilesCallbackFactory):
+async def process_category_press(callback: CallbackQuery, callback_data: ProfilesCallbackFactory, database):
     user_id = int(callback_data.user_id)
-    user_data = LEXICON["get_profile_data"].format(
-        user_id=user_id,
-        username=user_dict[user_id]["username"],
-        name=user_dict[user_id]["name"],
-        age=user_dict[user_id]["age"],
-        gender=user_dict[user_id]["gender"],
-        description=user_dict[user_id]["description"]
-    )
-
-    await callback.message.answer_photo(
-        photo=user_dict[user_id]["photo_id"],
-        caption=user_data,
-        reply_markup=profiles_back_inline_kb,
-    )
+    await show_user_profile(callback.message, user_id, database)
 
     await callback.message.delete()
     await callback.answer()

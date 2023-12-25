@@ -57,11 +57,11 @@ class DatabaseMethods:
     })
     self.database.commit()
 
-  # def get_all_products(self):
-  #   query = "SELECT * FROM products"
-  #   self.cursor.execute(query)
-  #   response = self.cursor.fetchall()
-  #   return response
+  def get_profiles(self):
+    query = "SELECT * FROM profiles"
+    self.cursor.execute(query)
+    response = self.cursor.fetchall()
+    return response
   
   # def show_product(self, name: str):
   #   query = "SELECT * FROM products WHERE name = :name"
