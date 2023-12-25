@@ -5,7 +5,7 @@ from config.config import Config, load_config
 from keyboards.set_menu import set_main_menu
 
 import handlers
-
+from models.methods import DatabaseMethods
 
 async def main() -> None:
     configuration: Config = load_config(".env")
@@ -22,7 +22,14 @@ async def main() -> None:
 
     storage = RedisStorage(redis=redis)
 
-    dp: Dispatcher = Dispatcher(bot=bot, configuration=configuration, storage=storage)
+    database = DatabaseMethods()
+    database.create_tables()
+
+    dp: Dispatcher = Dispatcher(
+        bot=bot,
+        configuration=configuration,
+        storage=storage,
+        database=database)
 
     dp.startup.register(set_main_menu)
 
