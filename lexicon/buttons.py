@@ -17,3 +17,8 @@ BACK: dict[str, str] = {
 BACK_PROFILES: dict[str, str] = {
     "profiles_back_btn": "Come back ◀️",
 }
+
+REGISTRATION: dict[str, str] = {
+    "registration_button": "Registration 🖋",
+    "back_btn": "Come back ◀️",
+}
