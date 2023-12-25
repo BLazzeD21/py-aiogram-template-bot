@@ -23,7 +23,7 @@ router = Router()
 
 @router.message(CommandStart(), StateFilter(default_state))
 async def process_start_command(message: Message):
-    await message.answer(text=LEXICON["start_message"], reply_markup=main_kb)
+    await message.answer(text=LEXICON["start_message"], reply_markup=main_kb, disable_web_page_preview=True)
 
 
 @router.message(Command(commands="help"), StateFilter(default_state))
