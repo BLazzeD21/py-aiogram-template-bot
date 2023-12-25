@@ -45,6 +45,9 @@ async def process_main_button_press(message: Message):
 
 # ---------------- Button handlers from Callbacks ----------------
 
+@router.callback_query(F.data == "no_users", StateFilter(default_state))
+async def no_users_press(callback: CallbackQuery):
+    await callback.answer(text=LEXICON["no_users"])
 
 @router.callback_query(F.data == "back_btn", StateFilter(default_state))
 async def process_back_button_press(callback: CallbackQuery):
