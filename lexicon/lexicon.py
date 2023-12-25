@@ -28,6 +28,7 @@ LEXICON: dict[str, str] = {
     "send_photo": "Thank you!\n\nSend your photo:",
     "incorrect_photo": "Send your photo\n\nTo stop filling out the form, enter - <i>/cancel</i>",
     "form_completed": "✅ You have exited the FSM.\nYou have successfully completed the form.\n\nThe profile can be viewed in the profile - <i>/profile</i>",
+    "form_completed_sticker": r'CAACAgIAAxkBAAEoaeRlh49v7tzgcrgszl8qS_ikPiZlEwACUDkAAulVBRg9Q_7QMuwdwDME',
     "not_registered": "You have not registered. Registration - <i>/registration</i>",
     "enter_descr": "Enter your description:",
     "incorrect_descr": "You entered an incorrect description. Try again\n\nTo stop filling out the form, enter - <i>/cancel</i>",
