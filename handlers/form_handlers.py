@@ -6,7 +6,7 @@ from aiogram import Router, F
 
 from keyboards.reply_keyboards import main_kb, cancel_kb
 from keyboards.inline_keyboards import sex_inline_kb, back_inline_kb, registration_inline_kb
-from lexicon import LEXICON, get_profile_data
+from lexicon import LEXICON
 from states import FSMRegistration
 from models import user_dict
 
@@ -18,7 +18,14 @@ router = Router()
 
 async def show_user_profile(message: Message, user_id):
     if user_id in user_dict:
-        user_data = get_profile_data(user_dict, user_id)
+        user_data = LEXICON["get_profile_data"].format(
+            user_id=user_id,
+            username=user_dict[user_id]["username"],
+            name=user_dict[user_id]["name"],
+            age=user_dict[user_id]["age"],
+            gender=user_dict[user_id]["gender"],
+            description=user_dict[user_id]["description"]
+        )
 
         await message.answer_photo(
             photo=user_dict[user_id]["photo_id"],

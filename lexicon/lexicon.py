@@ -1,5 +1,7 @@
 LEXICON: dict[str, str] = {
     "/start": 'This bot was created for educational purposes and is a template with examples of using various functionality of the aiogram 3 framework for creating telegram bots. 🌿\n\n❓ Bot capabilities - /help\n\n🔗 Source: <a href="https://github.com/BLazzeD21/py-aiogram-template-bot">LINK</a>',
+    "help_message": "🤖 Available bot commands:\n\n",
+    "help_add": "➖ {command} - {description}\n",
     "other": "This action does nothing",
     "admin": "admin",
     "main_menu_button": "Main menu 🧨",
@@ -33,20 +35,6 @@ LEXICON: dict[str, str] = {
     "select_account": "Select an account:",
     "backward": "<<",
     "forward": ">>",
+    "get_profile_data": "Profile 🗂\n\n<b>ID:</b> <code>{user_id}</code>\n<b>Username:</b> @{username}\n<b>Name:</b> <code>{name}</code>n<b>Age:</b> <code>{age}</code>\n<b>Sex:</b> <code>{gender}</code>\n<b>Description:</b> <code>{description}</code>"
 }
 
-
-def get_profile_data(user: dict, user_id: int):
-    return f'Profile 🗂\n\n<b>ID:</b> <code>{user[user_id]["user_id"]}</code>\
-    \n<b>Username:</b> @{user[user_id]["username"]}\
-    \n<b>Name:</b> <code>{user[user_id]["name"]}</code>\
-    \n<b>Age:</b> <code>{user[user_id]["age"]}</code>\
-    \n<b>Sex:</b> <code>{user[user_id]["gender"]}</code>\
-    \n<b>Description:</b> <code>{user[user_id]["description"]}</code>'
-
-
-def get_help_commands(LEXICON_COMMANDS):
-    help = "🤖 Available bot commands:\n\n"
-    for key, value in LEXICON_COMMANDS.items():
-        help += f"➖ {key} - {value}\n"
-    return help

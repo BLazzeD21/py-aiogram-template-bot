@@ -14,7 +14,7 @@ from keyboards.inline_keyboards import (
 )
 from keyboards.create_inline_kb import create_profiles_keyboard
 from keyboards.profiles_callbackFactory import ProfilesCallbackFactory
-from lexicon import LEXICON, LEXICON_COMMANDS, get_help_commands, get_profile_data
+from lexicon import LEXICON, LEXICON_COMMANDS
 from models import user_dict
 
 router = Router()
@@ -29,7 +29,11 @@ async def process_start_command(message: Message):
 
 @router.message(Command(commands="help"), StateFilter(default_state))
 async def process_help_command(message: Message):
-    await message.answer(text=get_help_commands(LEXICON_COMMANDS), reply_markup=main_kb)
+    help_message = LEXICON["help_message"]
+    for key, value in LEXICON_COMMANDS.items():
+        help_message += LEXICON["help_add"].format(command=key,description=value)
+
+    await message.answer(text=help_message, reply_markup=main_kb)
 
 
 # ------------- Button handlers from ReplyKeyboards -------------
@@ -85,7 +89,14 @@ async def process_profile_button_press(callback: CallbackQuery):
 @router.callback_query(ProfilesCallbackFactory.filter())
 async def process_category_press(callback: CallbackQuery, callback_data: ProfilesCallbackFactory):
     user_id = int(callback_data.user_id)
-    user_data = get_profile_data(user_dict, user_id)
+    user_data = LEXICON["get_profile_data"].format(
+        user_id=user_id,
+        username=user_dict[user_id]["username"],
+        name=user_dict[user_id]["name"],
+        age=user_dict[user_id]["age"],
+        gender=user_dict[user_id]["gender"],
+        description=user_dict[user_id]["description"]
+    )
 
     await callback.message.answer_photo(
         photo=user_dict[user_id]["photo_id"],
