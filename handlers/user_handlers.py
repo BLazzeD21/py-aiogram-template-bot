@@ -24,7 +24,7 @@ router = Router()
 
 @router.message(CommandStart(), StateFilter(default_state))
 async def process_start_command(message: Message):
-    await message.answer(text=LEXICON["/start"], reply_markup=main_kb)
+    await message.answer(text=LEXICON["start_message"], reply_markup=main_kb)
 
 
 @router.message(Command(commands="help"), StateFilter(default_state))
@@ -57,8 +57,10 @@ async def process_back_button_press(callback: CallbackQuery):
 
 @router.callback_query(F.data == "info_button", StateFilter(default_state))
 async def process_info_button_press(callback: CallbackQuery):
-    await callback.message.edit_text(text=LEXICON["info"], reply_markup=info_inline_kb)
+    await callback.message.answer(text=LEXICON["info_message"],reply_markup=info_inline_kb)
+
     await callback.answer()
+    await callback.message.delete()
 
 
 @router.callback_query(F.data == "profile_button", StateFilter(default_state))

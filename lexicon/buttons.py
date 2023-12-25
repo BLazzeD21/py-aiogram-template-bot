@@ -22,3 +22,8 @@ REGISTRATION: dict[str, str] = {
     "registration_button": "Registration 🖋",
     "back_btn": "Come back ◀️",
 }
+
+PROFILE: dict[str, str] = {
+    "profile_button": "Profile 🗃",
+    "back_btn": "Come back ◀️",
+}

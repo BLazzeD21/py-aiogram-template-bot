@@ -5,7 +5,7 @@ from aiogram.fsm.state import default_state
 from aiogram import Router, F
 
 from keyboards.reply_keyboards import main_kb, cancel_kb
-from keyboards.inline_keyboards import sex_inline_kb, back_inline_kb, registration_inline_kb
+from keyboards.inline_keyboards import sex_inline_kb, back_inline_kb, registration_inline_kb, profile_inline_kb
 from lexicon import LEXICON
 from states import FSMRegistration
 from models import user_dict
@@ -53,7 +53,7 @@ async def process_registration_command(message: Message, state: FSMContext):
 @router.message(Command(commands="cancel"), StateFilter(default_state))
 @router.message(F.text == LEXICON["cancel_button"], StateFilter(default_state))
 async def process_cancel_command(message: Message):
-    await message.answer(text=LEXICON["nothing_to_cancel"], reply_markup=main_kb)
+    await message.answer(text=LEXICON["nothing_to_cancel"], reply_markup=registration_inline_kb)
 
 
 @router.message(Command(commands="cancel"), ~StateFilter(default_state))
@@ -130,7 +130,7 @@ async def process_photo_sent(message: Message, state: FSMContext, largest_photo:
     print(user_dict[user_id])
 
     await state.clear()
-    await message.answer(text=LEXICON["form_completed"], reply_markup=main_kb)
+    await message.answer(text=LEXICON["form_completed"], reply_markup=profile_inline_kb)
 
 
 @router.message(StateFilter(FSMRegistration.upload_photo))
