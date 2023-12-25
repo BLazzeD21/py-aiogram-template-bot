@@ -57,17 +57,18 @@ async def process_back_button_press(callback: CallbackQuery):
 
 @router.callback_query(F.data == "info_button", StateFilter(default_state))
 async def process_info_button_press(callback: CallbackQuery):
-    await callback.message.answer(text=LEXICON["info_message"],reply_markup=info_inline_kb)
-
-    await callback.answer()
     await callback.message.delete()
+    await callback.message.answer(text=LEXICON["info_message"],reply_markup=info_inline_kb)
+    await callback.answer()
 
 
 @router.callback_query(F.data == "profile_button", StateFilter(default_state))
-async def process_profile_button_press(callback: CallbackQuery):
+async def process_profile_button_press(callback: CallbackQuery, database):
     await callback.message.delete()
-    user_id = callback.from_user.id
-    await show_user_profile(callback.message, user_id)
+    
+    user_id = callback.message.chat.id
+    await show_user_profile(callback.message, user_id, database)
+
     await callback.answer()
 
 

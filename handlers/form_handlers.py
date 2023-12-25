@@ -9,6 +9,7 @@ from keyboards.inline_keyboards import sex_inline_kb, back_inline_kb, registrati
 from lexicon import LEXICON
 from states import FSMRegistration
 from models import user_dict
+from filters import ExistProduct
 
 
 router = Router()
@@ -16,20 +17,21 @@ router = Router()
 # ------------------------- Functions -------------------------
 
 
-async def show_user_profile(message: Message, user_id):
-    if user_id in user_dict:
-        user_data = LEXICON["get_profile_data"].format(
-            user_id=user_id,
-            username=user_dict[user_id]["username"],
-            name=user_dict[user_id]["name"],
-            age=user_dict[user_id]["age"],
-            gender=user_dict[user_id]["gender"],
-            description=user_dict[user_id]["description"]
-        )
+async def show_user_profile(message: Message, user_id, database):
+    user_data = database.get_profile(user_id)
 
+    if (user_data):
+        caption = LEXICON["get_profile_data"].format(
+            user_id=user_data[1],
+            username=user_data[2],
+            name=user_data[3],
+            age=user_data[4],
+            gender=user_data[5],
+            description=user_data[6]
+        )
         await message.answer_photo(
-            photo=user_dict[user_id]["photo_id"],
-            caption=user_data,
+            photo=user_data[7],
+            caption=caption,
             reply_markup=back_inline_kb,
         )
     else:
@@ -116,7 +118,7 @@ async def incorrect_descr(message: Message):
 
 
 @router.message(StateFilter(FSMRegistration.upload_photo), F.photo[-1].as_("largest_photo"))
-async def process_photo_sent(message: Message, state: FSMContext, largest_photo: PhotoSize):
+async def process_photo_sent(message: Message, state: FSMContext, largest_photo: PhotoSize, database):
     await state.update_data(
         photo_unique_id=largest_photo.file_unique_id,
         photo_id=largest_photo.file_id,
@@ -124,13 +126,17 @@ async def process_photo_sent(message: Message, state: FSMContext, largest_photo:
 
     username = message.from_user.username
     user_id = message.from_user.id
-    user_dict[user_id] = await state.get_data()
-    user_dict[user_id]["user_id"] = user_id
-    user_dict[user_id]["username"] = username
-    print(user_dict[user_id])
+
+    user_data = await state.get_data()
+
+    if (not database.get_profile(user_id)):
+        database.insert_user(user_data, user_id, username)
+    else:
+        database.update_user(user_id, username, user_data)
 
     await state.clear()
-    await message.answer(text=LEXICON["form_completed"], reply_markup=profile_inline_kb)
+    await message.answer_sticker(LEXICON['form_completed_sticker'])
+    await message.answer(text=LEXICON["form_completed"], reply_markup=main_kb)
 
 
 @router.message(StateFilter(FSMRegistration.upload_photo))
@@ -140,6 +146,6 @@ async def incorrect_photo(message: Message):
 
 @router.message(Command(commands="profile"), StateFilter(default_state))
 @router.message(F.text == LEXICON["profile_button"], StateFilter(default_state))
-async def show_profile(message: Message):
+async def show_profile(message: Message, database):
     user_id = message.from_user.id
-    await show_user_profile(message, user_id)
+    await show_user_profile(message, user_id, database)

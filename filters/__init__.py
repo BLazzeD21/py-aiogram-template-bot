@@ -1,1 +1,1 @@
-from .filters import IsAdmin
+from .filters import *
