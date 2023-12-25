@@ -5,7 +5,7 @@ from aiogram.fsm.state import default_state
 from aiogram import Router, F
 
 from keyboards.reply_keyboards import main_kb, cancel_kb
-from keyboards.inline_keyboards import sex_inline_kb, back_inline_kb, registration_inline_kb, profile_inline_kb
+from keyboards.inline_keyboards import sex_inline_kb, back_inline_kb, registration_inline_kb, profiles_back_inline_kb
 from lexicon import LEXICON
 from states import FSMRegistration
 
@@ -23,14 +23,14 @@ async def show_user_profile(message: Message, user_id, database):
             user_id=user_data[1],
             username=user_data[2],
             name=user_data[3],
-            age=user_data[4],
+            age=user_data[4],   
             gender=user_data[5],
             description=user_data[6]
         )
         await message.answer_photo(
             photo=user_data[7],
             caption=caption,
-            reply_markup=back_inline_kb,
+            reply_markup=profiles_back_inline_kb,
         )
     else:
         await message.answer(text=LEXICON["not_registered"], reply_markup=registration_inline_kb)

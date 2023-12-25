@@ -40,7 +40,7 @@ def create_profiles_keyboard(database: dict) -> InlineKeyboardMarkup:
             )
     else:
         profiles_kb_builder.row(
-                InlineKeyboardButton(text='No', callback_data='no_users')
+                InlineKeyboardButton(text=LEXICON["no_users"], callback_data="no_users")
             )
 
     profiles_kb_builder.row(

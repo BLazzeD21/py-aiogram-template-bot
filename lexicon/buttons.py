@@ -11,11 +11,11 @@ SEX_BUTTONS: dict[str, str] = {
 }
 
 BACK: dict[str, str] = {
-    "back_btn": "Come back ◀️",
+    "back_btn": "Back to menu ◀️",
 }
 
 BACK_PROFILES: dict[str, str] = {
-    "profiles_back_btn": "Come back ◀️",
+    "profiles_back_btn": "Back to profiles ◀️",
 }
 
 REGISTRATION: dict[str, str] = {
