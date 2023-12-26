@@ -33,8 +33,12 @@ LEXICON: dict[str, str] = {
     "incorrect_descr": "You entered an incorrect description. Try again\n\nTo stop filling out the form, enter - <i>/cancel</i>",
     "select_account": "Select an account:",
     "no_users": "No users yet",
-    "backward": "<<",
-    "forward": ">>",
+    "backward": "Previous page ◀️",
+    "forward": "Next page ➡️",
+    "stub": "This is an information button",
+    "profile_btn_text": "{username}\'s profile",
+    "first_page": "First page 🌕",
+    "last_page": "Last page 🌑",
     "form_completed_sticker": r'CAACAgIAAxkBAAEoaeRlh49v7tzgcrgszl8qS_ikPiZlEwACUDkAAulVBRg9Q_7QMuwdwDME',
     "get_profile_data": "<b>Profile 🗂</b>\n\n<b>├ ID:</b> <code>{user_id}</code>\n<b>├ Username:</b> @{username}\n<b>├ Name:</b> <code>{name}</code>\n<b>├ Age:</b> <code>{age}</code>\n<b>├ Sex:</b> <code>{gender}</code>\n<b>└ Description:</b> <code>{description}</code>"
 }
