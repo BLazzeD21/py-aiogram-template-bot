@@ -5,7 +5,7 @@ from aiogram.fsm.state import default_state
 from aiogram import Router, F
 
 from keyboards.reply_keyboards import main_kb, cancel_kb
-from keyboards.inline_keyboards import sex_inline_kb, back_inline_kb, registration_inline_kb, profiles_back_inline_kb
+from keyboards.inline_keyboards import sex_inline_kb, registration_inline_kb, profiles_back_inline_kb
 from lexicon import LEXICON
 from states import FSMRegistration
 
