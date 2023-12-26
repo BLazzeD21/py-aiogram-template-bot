@@ -3,23 +3,23 @@ from environs import Env
 
 
 @dataclass
-class TgBot:
+class TelegramBot:
     token: str
     admin_ids: list[int]
 
 
 @dataclass
-class DatabaseConfig:
-    redis_host: str
-    redis_port: str
-    redis_password: str
-    redis_db: str
+class RedisConfig:
+    host: str
+    port: str
+    password: str
+    db: str
 
 
 @dataclass
 class Config:
-    tg_bot: TgBot
-    db: DatabaseConfig
+    bot: TelegramBot
+    redis: RedisConfig
 
 
 def load_config(path: str | None) -> Config:
@@ -27,14 +27,14 @@ def load_config(path: str | None) -> Config:
     env.read_env(path)
 
     return Config(
-        tg_bot=TgBot(
+        bot=TelegramBot(
             token=env("BOT_TOKEN"),
             admin_ids=env.list("ADMIN_IDS", subcast=int),
         ),
-        db=DatabaseConfig(
-            redis_host=env("REDIS_HOST"),
-            redis_port=env("REDIS_PORT"),
-            redis_password=env("REDIS_PASSWORD"),
-            redis_db=env("REDIS_DB"),
+        redis=RedisConfig(
+            host=env("REDIS_HOST"),
+            port=env("REDIS_PORT"),
+            password=env("REDIS_PASSWORD"),
+            db=env("REDIS_DB"),
         ),
     )

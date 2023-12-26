@@ -10,19 +10,19 @@ from models.methods import DatabaseMethods
 async def main() -> None:
     configuration: Config = load_config(".env")
 
-    BOT_TOKEN: str = configuration.tg_bot.token
+    BOT_TOKEN: str = configuration.bot.token
 
-    redis = Redis(
-        host=configuration.db.redis_host,
-        port=configuration.db.redis_port,
-        db=configuration.db.redis_db,
+    redis: Redis = Redis(
+        host=configuration.redis.host,
+        port=configuration.redis.port,
+        db=configuration.redis.db,
     )
 
     bot: Bot = Bot(token=BOT_TOKEN, parse_mode="html")
 
-    storage = RedisStorage(redis=redis)
+    storage: RedisStorage = RedisStorage(redis=redis)
 
-    database = DatabaseMethods()
+    database: DatabaseMethods = DatabaseMethods()
     database.create_tables()
 
     dp: Dispatcher = Dispatcher(
