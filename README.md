@@ -19,7 +19,8 @@ This bot was created for educational purposes and is a template with examples of
 - setMyCommands,</br>
 - callback Factory,</br>
 - SQLite databases,</br>
-- FSM based on redis.</br>
+- FSM based on redis,</br>
+- Custom pagination.</br>
 
 # Bot structure 📁
 Folder  | Description
