@@ -133,3 +133,4 @@ logs
 
 # databases
 *.db
+*.db-journal
