@@ -1,5 +1,5 @@
 build:
-	docker build -t aiogram_bot .
+	docker build -t aiogram-template-bot .
 
 run:
-	docker run -it --name aiogram_bot aiogram_bot
+	docker run -it --name aiogram-template-bot aiogram-template-bot
