@@ -20,10 +20,10 @@ BACK_PROFILES: dict[str, str] = {
 
 REGISTRATION: dict[str, str] = {
     "registration_button": "Registration 🖋",
-    "back_btn": "Come back ◀️",
+    "back_btn": "Back to menu ◀️",
 }
 
 PROFILE: dict[str, str] = {
     "profile_button": "Profile 🗃",
-    "back_btn": "Come back ◀️",
+    "back_btn": "Back to menu ◀️",
 }
