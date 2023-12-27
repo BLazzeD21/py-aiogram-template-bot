@@ -57,12 +57,13 @@ async def process_main_button_press(message: Message):
 
 @router.callback_query(F.data == "back_btn", StateFilter(default_state))
 async def process_back_button_press(callback: CallbackQuery):
+    await callback.message.delete()
+
     await callback.message.answer(
         text=LEXICON["main_menu_button"], reply_markup=main_inline_kb
     )
 
     await callback.answer()
-    await callback.message.delete()
 
 
 @router.callback_query(F.data == "info_button", StateFilter(default_state))
@@ -87,7 +88,9 @@ async def process_profile_button_press(callback: CallbackQuery, database):
 @router.callback_query(F.data == "registration_button", StateFilter(default_state))
 async def process_profile_button_press(callback: CallbackQuery, state: FSMContext):
     await callback.message.delete()
+
     await registration_user_profile(callback.message, state)
+
     await callback.answer()
 
 
@@ -95,32 +98,34 @@ async def process_profile_button_press(callback: CallbackQuery, state: FSMContex
     F.data.in_(["profiles_back_btn", "profiles_button"]), StateFilter(default_state)
 )
 async def process_profile_button_press(callback: CallbackQuery, database):
+    await callback.message.delete()
+
     profiles_kb = create_profiles_keyboard(database, 1)
 
     await callback.message.answer(
         text=LEXICON["select_account"], reply_markup=profiles_kb
     )
 
-    await callback.message.delete()
     await callback.answer()
 
 
 @router.callback_query(ChangePageCallbackFactory.filter())
-async def process_category_press(
+async def change_page_press(
     callback: CallbackQuery, callback_data: ChangePageCallbackFactory, database
 ):
+    await callback.message.delete()
+
     profiles_kb = create_profiles_keyboard(database, int(callback_data.page_number))
 
     await callback.message.answer(
         text=LEXICON["select_account"], reply_markup=profiles_kb
     )
 
-    await callback.message.delete()
     await callback.answer()
 
 
 @router.callback_query(ProfilesCallbackFactory.filter())
-async def process_category_press(
+async def show_profiles_press(
     callback: CallbackQuery, callback_data: ProfilesCallbackFactory, database
 ):
     user_id = int(callback_data.user_id)

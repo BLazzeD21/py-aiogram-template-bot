@@ -40,7 +40,7 @@ info_inline_kb = InlineKeyboardMarkup(
 
 # ------ Creating a keyboard menu using a special function ------
 
-main_inline_kb = create_inline_kb(1, **MAIN_BUTTONS)
+main_inline_kb = create_inline_kb(2, **MAIN_BUTTONS)
 
 sex_inline_kb = create_inline_kb(2, **SEX_BUTTONS)
 

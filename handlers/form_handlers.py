@@ -50,8 +50,8 @@ async def show_another_users_profile(callback: CallbackQuery, user_id, database,
     user_data = database.get_profile(user_id)
     keyboard = create_back_to_page(page)
     if user_data:
-        await send_profile(callback.message, user_data, keyboard)
         await callback.message.delete()
+        await send_profile(callback.message, user_data, keyboard)
     else:
         await callback.answer(text=LEXICON["not_exist"])
 
