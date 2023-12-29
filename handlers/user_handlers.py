@@ -113,15 +113,19 @@ async def process_profile_button_press(callback: CallbackQuery, database):
 async def change_page_press(
     callback: CallbackQuery, callback_data: ChangePageCallbackFactory, database
 ):
-    await callback.message.delete()
-
     profiles_kb = create_profiles_keyboard(database, int(callback_data.page_number))
+    await callback.answer()
 
-    await callback.message.answer(
+    if(callback_data.method_answer):
+        await callback.message.answer(
+            text=LEXICON["select_account"], reply_markup=profiles_kb
+        )
+        await callback.message.delete()
+        return
+
+    await callback.message.edit_text(
         text=LEXICON["select_account"], reply_markup=profiles_kb
     )
-
-    await callback.answer()
 
 
 @router.callback_query(ProfilesCallbackFactory.filter())

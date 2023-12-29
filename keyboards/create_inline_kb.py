@@ -33,10 +33,10 @@ def create_inline_kb(width: int, *args: str, **kwargs: str) -> InlineKeyboardMar
 
 
 def create_profiles_keyboard(database: dict, page: int) -> InlineKeyboardMarkup:
-    profiles_kb_builder = InlineKeyboardBuilder()
+    profiles_kb_builder: InlineKeyboardBuilder  = InlineKeyboardBuilder()
     profiles_buttons: list[InlineKeyboardButton] = []
 
-    profiles = database.get_profiles()
+    profiles: list = database.get_profiles()
     profiles_count: int = len(profiles)
     profiles_on_page: int = 4
     pages_count: int = ceil(profiles_count / profiles_on_page)
@@ -78,7 +78,8 @@ def create_profiles_keyboard(database: dict, page: int) -> InlineKeyboardMarkup:
                 InlineKeyboardButton(
                     text=LEXICON["forward"],
                     callback_data=ChangePageCallbackFactory(
-                        page_number=str(page + 1)
+                        page_number=str(page + 1),
+                        method_answer=False,
                     ).pack(),
                 ),
             )
@@ -88,7 +89,8 @@ def create_profiles_keyboard(database: dict, page: int) -> InlineKeyboardMarkup:
                 InlineKeyboardButton(
                     text=LEXICON["backward"],
                     callback_data=ChangePageCallbackFactory(
-                        page_number=str(page - 1)
+                        page_number=str(page - 1),
+                        method_answer=False,
                     ).pack(),
                 ),
                 InlineKeyboardButton(
@@ -102,7 +104,8 @@ def create_profiles_keyboard(database: dict, page: int) -> InlineKeyboardMarkup:
                 InlineKeyboardButton(
                     text=LEXICON["backward"],
                     callback_data=ChangePageCallbackFactory(
-                        page_number=str(page - 1)
+                        page_number=str(page - 1),
+                        method_answer=False,
                     ).pack(),
                 ),
                 InlineKeyboardButton(
@@ -112,7 +115,8 @@ def create_profiles_keyboard(database: dict, page: int) -> InlineKeyboardMarkup:
                 InlineKeyboardButton(
                     text=LEXICON["forward"],
                     callback_data=ChangePageCallbackFactory(
-                        page_number=str(page + 1)
+                        page_number=str(page + 1),
+                        method_answer=False,
                     ).pack(),
                 ),
             )
@@ -126,13 +130,16 @@ def create_profiles_keyboard(database: dict, page: int) -> InlineKeyboardMarkup:
     return profiles_kb_builder.as_markup()
 
 
-def create_back_to_page(page: str) -> InlineKeyboardMarkup:
-    back_kb_builder = InlineKeyboardBuilder()
+def create_back_to_page(page: int) -> InlineKeyboardMarkup:
+    back_kb_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
 
     back_kb_builder.row(
         InlineKeyboardButton(
             text=LEXICON["back_profiles"],
-            callback_data=ChangePageCallbackFactory(page_number=str(page)).pack(),
+            callback_data=ChangePageCallbackFactory(
+                page_number=str(page),
+                method_answer=True,
+            ).pack(),
         ),
         InlineKeyboardButton(text=LEXICON["back"], callback_data="back_btn"),
     )
