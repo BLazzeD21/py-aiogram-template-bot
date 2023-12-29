@@ -13,24 +13,24 @@ from lexicon import (
 
 # ---------------------- Creating Buttons ----------------------
 
-aiogram_btn = InlineKeyboardButton(
+aiogram_btn: InlineKeyboardButton = InlineKeyboardButton(
     text=LEXICON["aiogram"],
     url=LINKS["aiogram"],
 )
 
-github_btn = InlineKeyboardButton(
+github_btn: InlineKeyboardButton = InlineKeyboardButton(
     text=LEXICON["github"],
     url=LINKS["github"],
 )
 
-back_btn = InlineKeyboardButton(
+back_btn: InlineKeyboardButton = InlineKeyboardButton(
     text=LEXICON["back"],
     callback_data="back_btn",
 )
 
 # ------------------ Creating a keyboard menu ------------------
 
-info_inline_kb = InlineKeyboardMarkup(
+info_inline_kb: InlineKeyboardMarkup = InlineKeyboardMarkup(
     inline_keyboard=[
         [github_btn],
         [aiogram_btn],
@@ -40,12 +40,12 @@ info_inline_kb = InlineKeyboardMarkup(
 
 # ------ Creating a keyboard menu using a special function ------
 
-main_inline_kb = create_inline_kb(2, **MAIN_BUTTONS)
+main_inline_kb: InlineKeyboardMarkup = create_inline_kb(2, **MAIN_BUTTONS)
 
-sex_inline_kb = create_inline_kb(2, **SEX_BUTTONS)
+sex_inline_kb: InlineKeyboardMarkup = create_inline_kb(2, **SEX_BUTTONS)
 
-back_inline_kb = create_inline_kb(1, **BACK)
+back_inline_kb: InlineKeyboardMarkup = create_inline_kb(1, **BACK)
 
-registration_inline_kb = create_inline_kb(1, **REGISTRATION)
+registration_inline_kb: InlineKeyboardMarkup = create_inline_kb(1, **REGISTRATION)
 
-profile_inline_kb = create_inline_kb(1, **PROFILE)
+profile_inline_kb: InlineKeyboardMarkup = create_inline_kb(1, **PROFILE)

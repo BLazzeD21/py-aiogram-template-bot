@@ -1,12 +1,15 @@
 import asyncio
 
-from logger import startLogging
 from bot import main
+
+from logging import RootLogger
+from logger import startLogging
+
 
 
 if __name__ == '__main__':
   try:
-    logger = startLogging()
+    logger: RootLogger = startLogging()
     asyncio.run(main())
   except KeyboardInterrupt:
     pass
