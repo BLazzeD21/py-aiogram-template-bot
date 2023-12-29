@@ -1,6 +1,7 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from math import ceil
+from models.methods import DatabaseMethods
 
 from lexicon import LEXICON
 from keyboards.profiles_callbackFactory import (
@@ -10,7 +11,7 @@ from keyboards.profiles_callbackFactory import (
 
 
 def create_inline_kb(width: int, *args: str, **kwargs: str) -> InlineKeyboardMarkup:
-    kb_builder = InlineKeyboardBuilder()
+    kb_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
 
     buttons: list[InlineKeyboardButton] = []
 
@@ -32,14 +33,18 @@ def create_inline_kb(width: int, *args: str, **kwargs: str) -> InlineKeyboardMar
     return kb_builder.as_markup()
 
 
-def create_profiles_keyboard(database: dict, page: int) -> InlineKeyboardMarkup:
-    profiles_kb_builder: InlineKeyboardBuilder  = InlineKeyboardBuilder()
+def create_profiles_keyboard(
+    database: DatabaseMethods, page: int
+) -> InlineKeyboardMarkup:
+    profiles_kb_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
     profiles_buttons: list[InlineKeyboardButton] = []
 
-    profiles: list = database.get_profiles()
+    profiles: list[tuple] = database.get_profiles()
+
     profiles_count: int = len(profiles)
     profiles_on_page: int = 4
     pages_count: int = ceil(profiles_count / profiles_on_page)
+
     start_profile: int = page * profiles_on_page - profiles_on_page
     end_profile: int = start_profile + profiles_on_page
 
@@ -50,10 +55,10 @@ def create_profiles_keyboard(database: dict, page: int) -> InlineKeyboardMarkup:
 
     if profiles_count <= profiles_on_page and profiles_count > 0:
         for user in profiles:
-            callback_data = ProfilesCallbackFactory(
+            callback_data: ProfilesCallbackFactory = ProfilesCallbackFactory(
                 user_id=str(user[1]), page_number=str(page)
             ).pack()
-            text = LEXICON["profile_btn_text"].format(username=user[2])
+            text: str = LEXICON["profile_btn_text"].format(username=user[2])
 
             profiles_buttons.append(
                 InlineKeyboardButton(text=text, callback_data=callback_data)
@@ -61,10 +66,10 @@ def create_profiles_keyboard(database: dict, page: int) -> InlineKeyboardMarkup:
 
     if profiles_count > profiles_on_page:
         for user in profiles[start_profile:end_profile]:
-            callback_data = ProfilesCallbackFactory(
+            callback_data: ProfilesCallbackFactory = ProfilesCallbackFactory(
                 user_id=str(user[1]), page_number=str(page)
             ).pack()
-            text = LEXICON["profile_btn_text"].format(username=user[2])
+            text: str = LEXICON["profile_btn_text"].format(username=user[2])
 
             profiles_buttons.append(
                 InlineKeyboardButton(text=text, callback_data=callback_data)
