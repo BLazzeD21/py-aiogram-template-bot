@@ -9,6 +9,9 @@ LICENSE
 # Markdowns
 *.md
 
+# Makefile
+Makefile
+
 # Docker
 docker-compose.yml
 Dockerfile
@@ -74,14 +77,13 @@ cover/
 target/
 
 # Environments
-# .env
-# .env.example
-# .venv
-# env/
-# venv/
-# ENV/
-# env.bak/
-# venv.bak/
+.env.example
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
 
 # logs
