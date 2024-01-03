@@ -7,6 +7,8 @@ LEXICON: dict[str, str] = {
     "main_menu_button": "Main menu 🧨",
     "profile_button": "Profile 🗃",
     "form_button": "Sign up 🖋",
+    "change_profile": "Edit profile 🖋",
+    "delete_profile": "Delete profile 🗑",
     "profiles_button": "Profiles 📝",
     "info_button": "Information ℹ️",
     "cancel_button": "Cancel ❌",
@@ -18,7 +20,7 @@ LEXICON: dict[str, str] = {
     "aiogram": "Aiogram documentation",
     "back": "Menu ◀️",
     "back_profiles": "Profiles ◀️",
-    "nothing_to_cancel": "There is nothing to cancel. You are outside the state machine.",
+    "nothing_to_cancel": "There is nothing to cancel. You are not filling out the form.",
     "cancel": "You have canceled filling out the form ✨",
     "registering": "You are currently filling out the form. To cancel filling, click the button - <i>Cancel ❌</i>",
     "enter_name": "Enter your name:",
@@ -43,7 +45,9 @@ LEXICON: dict[str, str] = {
     "last_page": "Last page 🌑",
     "male": "Male 🧍🏻‍♂️",
     "female": "Female 🧍🏻‍♀️",
-    "not_exist": "This user does not exist 😩", 
+    "not_exist": "This user does not exist 😩",
+    "db_error": "Error connecting to database ⛔️",
+    "profile_deleted": "Profile deleted successfully ✅",
     "form_completed_sticker": r'CAACAgIAAxkBAAEoaeRlh49v7tzgcrgszl8qS_ikPiZlEwACUDkAAulVBRg9Q_7QMuwdwDME',
     "get_profile_data": "<b>Profile 🗂</b>\n\n<b>├ ID:</b> <code>{user_id}</code>\n<b>├ Username:</b> @{username}\n<b>├ Name:</b> <code>{name}</code>\n<b>├ Age:</b> <code>{age}</code>\n<b>├ Sex:</b> <code>{gender}</code>\n<b>└ Description:</b> <code>{description}</code>"
 }

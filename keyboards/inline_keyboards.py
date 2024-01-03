@@ -44,8 +44,8 @@ main_inline_kb: InlineKeyboardMarkup = create_inline_kb(2, **MAIN_BUTTONS)
 
 sex_inline_kb: InlineKeyboardMarkup = create_inline_kb(2, **SEX_BUTTONS)
 
-settings_inline_kb: InlineKeyboardMarkup = create_inline_kb(2, **SETTINGS)
-
 registration_inline_kb: InlineKeyboardMarkup = create_inline_kb(2, **REGISTRATION)
 
 profile_inline_kb: InlineKeyboardMarkup = create_inline_kb(2, **PROFILE)
+
+settings_inline_kb: InlineKeyboardMarkup = create_inline_kb(2, **SETTINGS)

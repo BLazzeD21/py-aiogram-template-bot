@@ -77,6 +77,25 @@ async def process_info_button_press(callback: CallbackQuery) -> None:
     )
     await callback.answer()
 
+@router.message(F.text == LEXICON["profile_button"], StateFilter(default_state))
+async def process_show_profile(message: Message, database: DatabaseMethods) -> None:
+    user_id: int = message.from_user.id
+    await show_user_profile(message, user_id, database)
+
+@router.callback_query(F.data == "delete_profile", StateFilter(default_state))
+async def process_delete_profile_press(callback: CallbackQuery, database: DatabaseMethods) -> None:
+    user_id: int = callback.message.from_user.id
+    await callback.message.delete()
+
+    try:
+        await database.connect()
+        await database.delete_profile(user_id)
+        await callback.message.answer(text=LEXICON["profile_deleted"])
+        await callback.message.answer(text=LEXICON["main_menu_button"], reply_markup=main_inline_kb)
+    except:
+        await callback.message.answer(text=LEXICON["db_error"])
+    finally:
+        await database.close()
 
 @router.callback_query(F.data == "profile_button", StateFilter(default_state))
 async def process_profile_button_press(

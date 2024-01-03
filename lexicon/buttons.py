@@ -13,6 +13,8 @@ SEX_BUTTONS: dict[str, str] = {
 }
 
 SETTINGS: dict[str, str] = {
+    "form_button": LEXICON["change_profile"],
+    "delete_profile": LEXICON["delete_profile"],
     "back_btn": LEXICON["back"],
 }
 
