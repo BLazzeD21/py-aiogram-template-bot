@@ -73,8 +73,8 @@ async def registration_user_profile(message: Message, state: FSMContext) -> None
 # ---------------------- Command handlers ----------------------
 
 
-@router.message(Command(commands="registration"), StateFilter(default_state))
-@router.message(F.text == LEXICON["registration_button"], StateFilter(default_state))
+@router.message(Command(commands="form"), StateFilter(default_state))
+@router.message(F.text == LEXICON["form_button"], StateFilter(default_state))
 async def process_registration_command(message: Message, state: FSMContext) -> None:
     await registration_user_profile(message, state)
 
@@ -94,7 +94,7 @@ async def process_cancel_command_state(message: Message, state: FSMContext) -> N
     await state.clear()
 
 
-@router.message(StateFilter(FSMRegistration.fill_name), F.text.isalpha())
+@router.message(StateFilter(FSMRegistration.fill_name), F.content_type.in_({"text"}))
 async def process_name_sent(message: Message, state: FSMContext) -> None:
     await state.update_data(name=message.text)
     await message.answer(text=LEXICON["enter_age"], reply_markup=cancel_kb)
@@ -137,7 +137,9 @@ async def incorrect_gender(message: Message) -> None:
 
 
 @router.message(
-    StateFilter(FSMRegistration.fill_description), lambda x: 1 <= len(x.text) <= 250
+    StateFilter(FSMRegistration.fill_description),
+    F.content_type.in_({"text"}),
+    lambda x: 1 <= len(x.text) <= 250,
 )
 async def process_descr_sent(message: Message, state: FSMContext) -> None:
     await state.update_data(description=message.text)
