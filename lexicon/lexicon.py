@@ -31,7 +31,7 @@ LEXICON: dict[str, str] = {
     "incorrect_gender": "Select gender using buttons. Try again\n\nTo cancel filling, click the button - <i>Cancel ❌</i>",
     "send_photo": "Thank you!\n\nSend your photo:",
     "incorrect_photo": "This is not a photo, try again\n\nTo cancel filling, click the button - <i>Cancel </i>",
-    "form_completed": "✅ You have successfully completed the form.",
+    "form_completed": "You have successfully completed the form ✅",
     "not_registered": "You have not registered ❌",
     "enter_descr": "Enter your description:",
     "incorrect_descr": "You entered an incorrect description. Try again\n\nTo cancel filling, click the button - <i>Cancel ❌</i>",
@@ -49,6 +49,7 @@ LEXICON: dict[str, str] = {
     "db_error": "Error connecting to database ⛔️",
     "profile_deleted": "Profile deleted successfully ✅",
     "form_completed_sticker": r'CAACAgIAAxkBAAEoaeRlh49v7tzgcrgszl8qS_ikPiZlEwACUDkAAulVBRg9Q_7QMuwdwDME',
+    "profile_deleted_sticker": r'CAACAgIAAxkBAAEopPdlle02NPGbRPJfRK3aDt2mJ6EGdwACXzkAAulVBRg6BzL-WOPpZDQE',
     "get_profile_data": "<b>Profile 🗂</b>\n\n<b>├ ID:</b> <code>{user_id}</code>\n<b>├ Username:</b> @{username}\n<b>├ Name:</b> <code>{name}</code>\n<b>├ Age:</b> <code>{age}</code>\n<b>├ Sex:</b> <code>{gender}</code>\n<b>└ Description:</b> <code>{description}</code>"
 }
 
