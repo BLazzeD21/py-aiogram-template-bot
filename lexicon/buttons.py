@@ -2,7 +2,7 @@ from lexicon import LEXICON
 
 MAIN_BUTTONS: dict[str, str] = {
     "profile_button": LEXICON["profile_button"],
-    "registration_button": LEXICON["registration_button"],
+    "form_button": LEXICON["form_button"],
     "profiles_button": LEXICON["profiles_button"],
     "info_button": LEXICON["info_button"],
 }
@@ -17,7 +17,7 @@ BACK: dict[str, str] = {
 }
 
 REGISTRATION: dict[str, str] = {
-    "registration_button": LEXICON["registration_button"],
+    "form_button": LEXICON["form_button"],
     "back_btn": LEXICON["back"],
 }
 

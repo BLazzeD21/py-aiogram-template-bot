@@ -90,8 +90,8 @@ async def process_profile_button_press(
     await callback.answer()
 
 
-@router.callback_query(F.data == "registration_button", StateFilter(default_state))
-async def process_registration_button_press(
+@router.callback_query(F.data == "form_button", StateFilter(default_state))
+async def process_form_button_press(
     callback: CallbackQuery, state: FSMContext
 ) -> None:
     await callback.message.delete()

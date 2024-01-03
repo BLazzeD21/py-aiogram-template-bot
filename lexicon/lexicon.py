@@ -6,7 +6,7 @@ LEXICON: dict[str, str] = {
     "admin": "admin",
     "main_menu_button": "Main menu 🧨",
     "profile_button": "Profile 🗃",
-    "registration_button": "Registration 🖋",
+    "form_button": "Sign up 🖋",
     "profiles_button": "Profiles 📝",
     "info_button": "Information ℹ️",
     "cancel_button": "Cancel ❌",

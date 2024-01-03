@@ -7,9 +7,7 @@ from lexicon import LEXICON
 
 main_menu_button: KeyboardButton = KeyboardButton(text=LEXICON["main_menu_button"])
 profile_button: KeyboardButton = KeyboardButton(text=LEXICON["profile_button"])
-registration_button: KeyboardButton = KeyboardButton(
-    text=LEXICON["registration_button"]
-)
+form_button: KeyboardButton = KeyboardButton(text=LEXICON["form_button"])
 cancel_button: KeyboardButton = KeyboardButton(text=LEXICON["cancel_button"])
 
 # ---------------------- Creating a keyboard menu ----------------------
@@ -19,7 +17,7 @@ main_kb_builder: ReplyKeyboardBuilder = ReplyKeyboardBuilder()
 main_btns: list[KeyboardButton] = [
     main_menu_button,
     profile_button,
-    registration_button,
+    # form_button,
 ]
 
 main_kb_builder.row(*main_btns, width=2)

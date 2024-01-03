@@ -73,13 +73,11 @@ async def registration_user_profile(message: Message, state: FSMContext) -> None
 # ---------------------- Command handlers ----------------------
 
 
-@router.message(Command(commands="form"), StateFilter(default_state))
 @router.message(F.text == LEXICON["form_button"], StateFilter(default_state))
 async def process_registration_command(message: Message, state: FSMContext) -> None:
     await registration_user_profile(message, state)
 
 
-@router.message(Command(commands="cancel"), StateFilter(default_state))
 @router.message(F.text == LEXICON["cancel_button"], StateFilter(default_state))
 async def process_cancel_command(message: Message) -> None:
     await message.answer(
@@ -186,7 +184,6 @@ async def incorrect_photo(message: Message) -> None:
     await message.answer(text=LEXICON["incorrect_photo"], reply_markup=cancel_kb)
 
 
-@router.message(Command(commands="profile"), StateFilter(default_state))
 @router.message(F.text == LEXICON["profile_button"], StateFilter(default_state))
 async def show_profile(message: Message, database: DatabaseMethods) -> None:
     user_id: int = message.from_user.id
