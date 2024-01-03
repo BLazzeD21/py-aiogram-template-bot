@@ -9,7 +9,8 @@ from keyboards.reply_keyboards import main_kb, cancel_kb
 from keyboards.inline_keyboards import (
     sex_inline_kb,
     registration_inline_kb,
-    back_inline_kb,
+    settings_inline_kb,
+    profile_inline_kb
 )
 from keyboards.create_inline_kb import create_back_to_page
 from lexicon import LEXICON
@@ -44,7 +45,7 @@ async def show_user_profile(
     user_data: tuple = database.get_profile(user_id)
 
     if user_data:
-        await send_profile(message, user_data, back_inline_kb)
+        await send_profile(message, user_data, settings_inline_kb)
     else:
         await message.answer(
             text=LEXICON["not_registered"], reply_markup=registration_inline_kb
@@ -176,7 +177,7 @@ async def process_photo_sent(
 
     await state.clear()
     await message.answer_sticker(LEXICON["form_completed_sticker"])
-    await message.answer(text=LEXICON["form_completed"], reply_markup=main_kb)
+    await message.answer(text=LEXICON["form_completed"], reply_markup=profile_inline_kb)
 
 
 @router.message(StateFilter(FSMRegistration.upload_photo))

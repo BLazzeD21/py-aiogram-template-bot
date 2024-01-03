@@ -6,7 +6,7 @@ from lexicon import (
     MAIN_BUTTONS,
     SEX_BUTTONS,
     LINKS,
-    BACK,
+    SETTINGS,
     REGISTRATION,
     PROFILE,
 )
@@ -44,8 +44,8 @@ main_inline_kb: InlineKeyboardMarkup = create_inline_kb(2, **MAIN_BUTTONS)
 
 sex_inline_kb: InlineKeyboardMarkup = create_inline_kb(2, **SEX_BUTTONS)
 
-back_inline_kb: InlineKeyboardMarkup = create_inline_kb(1, **BACK)
+settings_inline_kb: InlineKeyboardMarkup = create_inline_kb(2, **SETTINGS)
 
-registration_inline_kb: InlineKeyboardMarkup = create_inline_kb(1, **REGISTRATION)
+registration_inline_kb: InlineKeyboardMarkup = create_inline_kb(2, **REGISTRATION)
 
-profile_inline_kb: InlineKeyboardMarkup = create_inline_kb(1, **PROFILE)
+profile_inline_kb: InlineKeyboardMarkup = create_inline_kb(2, **PROFILE)

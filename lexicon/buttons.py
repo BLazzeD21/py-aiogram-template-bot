@@ -12,7 +12,7 @@ SEX_BUTTONS: dict[str, str] = {
     "female": LEXICON["female"],
 }
 
-BACK: dict[str, str] = {
+SETTINGS: dict[str, str] = {
     "back_btn": LEXICON["back"],
 }
 
