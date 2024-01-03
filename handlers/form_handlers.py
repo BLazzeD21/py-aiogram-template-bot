@@ -10,7 +10,7 @@ from keyboards.inline_keyboards import (
     sex_inline_kb,
     registration_inline_kb,
     settings_inline_kb,
-    profile_inline_kb
+    profile_inline_kb,
 )
 from keyboards.create_inline_kb import create_back_to_page
 from lexicon import LEXICON
@@ -42,28 +42,40 @@ async def send_profile(
 async def show_user_profile(
     message: Message, user_id: int, database: DatabaseMethods
 ) -> None:
-    user_data: tuple = database.get_profile(user_id)
+    try:
+        await database.connect()
+        user_data: tuple = await database.get_profile(user_id)
 
-    if user_data:
-        await send_profile(message, user_data, settings_inline_kb)
-    else:
-        await message.answer(
-            text=LEXICON["not_registered"], reply_markup=registration_inline_kb
-        )
+        if user_data:
+            await send_profile(message, user_data, settings_inline_kb)
+        else:
+            await message.answer(
+                text=LEXICON["not_registered"], reply_markup=registration_inline_kb
+            )
+    except:
+        await message.answer(text=LEXICON["db_error"], reply_markup=main_kb)
+    finally:
+        await database.close()
 
 
 async def show_another_users_profile(
     callback: CallbackQuery, user_id: int, database: DatabaseMethods, page: int
 ) -> None:
-    user_data: tuple = database.get_profile(user_id)
+    try:
+        await database.connect()
+        user_data: tuple = await database.get_profile(user_id)
 
-    keyboard: InlineKeyboardMarkup = create_back_to_page(page)
+        keyboard: InlineKeyboardMarkup = create_back_to_page(page)
 
-    if user_data:
-        await callback.message.delete()
-        await send_profile(callback.message, user_data, keyboard)
-    else:
-        await callback.answer(text=LEXICON["not_exist"])
+        if user_data:
+            await callback.message.delete()
+            await send_profile(callback.message, user_data, keyboard)
+        else:
+            await callback.answer(text=LEXICON["not_exist"])
+    except:
+        await callback.message.answer(text=LEXICON["db_error"], reply_markup=main_kb)
+    finally:
+        await database.close()
 
 
 async def registration_user_profile(message: Message, state: FSMContext) -> None:
@@ -86,7 +98,6 @@ async def process_cancel_command(message: Message) -> None:
     )
 
 
-@router.message(Command(commands="cancel"), ~StateFilter(default_state))
 @router.message(F.text == LEXICON["cancel_button"], ~StateFilter(default_state))
 async def process_cancel_command_state(message: Message, state: FSMContext) -> None:
     await message.answer(text=LEXICON["cancel"], reply_markup=main_kb)
@@ -170,22 +181,25 @@ async def process_photo_sent(
 
     user_data: tuple = await state.get_data()
 
-    if not database.get_profile(user_id):
-        database.insert_user(user_data, user_id, username)
-    else:
-        database.update_user(user_id, username, user_data)
+    try:
+        await database.connect()
+        user: tuple = await database.get_profile(user_id)
 
-    await state.clear()
-    await message.answer_sticker(LEXICON["form_completed_sticker"])
-    await message.answer(text=LEXICON["form_completed"], reply_markup=profile_inline_kb)
+        if not user:
+            await database.insert_user(user_data, user_id, username)
+        else:
+            await database.update_user(user_id, username, user_data)
+
+        await state.clear()
+
+        await message.answer_sticker(LEXICON["form_completed_sticker"], reply_markup=main_kb)
+        await message.answer(text=LEXICON["form_completed"])
+    except:
+        await message.answer(text=LEXICON["db_error"], reply_markup=main_kb)
+    finally:
+        await database.close()
 
 
 @router.message(StateFilter(FSMRegistration.upload_photo))
 async def incorrect_photo(message: Message) -> None:
     await message.answer(text=LEXICON["incorrect_photo"], reply_markup=cancel_kb)
-
-
-@router.message(F.text == LEXICON["profile_button"], StateFilter(default_state))
-async def show_profile(message: Message, database: DatabaseMethods) -> None:
-    user_id: int = message.from_user.id
-    await show_user_profile(message, user_id, database)

@@ -33,13 +33,9 @@ def create_inline_kb(width: int, *args: str, **kwargs: str) -> InlineKeyboardMar
     return kb_builder.as_markup()
 
 
-def create_profiles_keyboard(
-    database: DatabaseMethods, page: int
-) -> InlineKeyboardMarkup:
+def create_profiles_keyboard(profiles: tuple, page: int) -> InlineKeyboardMarkup:
     profiles_kb_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
     profiles_buttons: list[InlineKeyboardButton] = []
-
-    profiles: list[tuple] = database.get_profiles()
 
     profiles_count: int = len(profiles)
     profiles_on_page: int = 4

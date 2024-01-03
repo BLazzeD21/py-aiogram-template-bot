@@ -77,25 +77,30 @@ async def process_info_button_press(callback: CallbackQuery) -> None:
     )
     await callback.answer()
 
+
 @router.message(F.text == LEXICON["profile_button"], StateFilter(default_state))
 async def process_show_profile(message: Message, database: DatabaseMethods) -> None:
     user_id: int = message.from_user.id
     await show_user_profile(message, user_id, database)
 
+
 @router.callback_query(F.data == "delete_profile", StateFilter(default_state))
-async def process_delete_profile_press(callback: CallbackQuery, database: DatabaseMethods) -> None:
-    user_id: int = callback.message.from_user.id
+async def process_delete_profile_press(
+    callback: CallbackQuery, database: DatabaseMethods
+) -> None:
+    user_id: int = callback.message.chat.id
     await callback.message.delete()
 
     try:
         await database.connect()
         await database.delete_profile(user_id)
+        await callback.message.answer_sticker(LEXICON["profile_deleted_sticker"], reply_markup=main_kb)
         await callback.message.answer(text=LEXICON["profile_deleted"])
-        await callback.message.answer(text=LEXICON["main_menu_button"], reply_markup=main_inline_kb)
     except:
-        await callback.message.answer(text=LEXICON["db_error"])
+        await callback.message.answer(text=LEXICON["db_error"], reply_markup=main_kb)
     finally:
         await database.close()
+
 
 @router.callback_query(F.data == "profile_button", StateFilter(default_state))
 async def process_profile_button_press(
@@ -110,9 +115,7 @@ async def process_profile_button_press(
 
 
 @router.callback_query(F.data == "form_button", StateFilter(default_state))
-async def process_form_button_press(
-    callback: CallbackQuery, state: FSMContext
-) -> None:
+async def process_form_button_press(callback: CallbackQuery, state: FSMContext) -> None:
     await callback.message.delete()
 
     await registration_user_profile(callback.message, state)
@@ -127,13 +130,20 @@ async def process_profile_call(
     callback: CallbackQuery, database: DatabaseMethods
 ) -> None:
     await callback.message.delete()
+    try:
+        await database.connect()
+        profiles: list[tuple] = await database.get_profiles()
 
-    profiles_kb: InlineKeyboardMarkup = create_profiles_keyboard(database, 1)
+        profiles_kb: InlineKeyboardMarkup = create_profiles_keyboard(profiles, 1)
 
-    await callback.message.answer(
-        text=LEXICON["select_account"], reply_markup=profiles_kb
-    )
-    await callback.answer()
+        await callback.message.answer(
+            text=LEXICON["select_account"], reply_markup=profiles_kb
+        )
+        await callback.answer()
+    except:
+        await callback.message.answer(text=LEXICON["db_error"], reply_markup=main_kb)
+    finally:
+        await database.close()
 
 
 @router.callback_query(ChangePageCallbackFactory.filter())
@@ -142,25 +152,34 @@ async def change_page_press(
     callback_data: ChangePageCallbackFactory,
     database: DatabaseMethods,
 ) -> None:
-    profiles_kb: InlineKeyboardMarkup = create_profiles_keyboard(
-        database, int(callback_data.page_number)
-    )
+    user_id = int(callback_data.page_number)
+    try:
+        await database.connect()
+        profiles: list[tuple] = await database.get_profiles()
 
-    await callback.answer()
+        profiles_kb: InlineKeyboardMarkup = create_profiles_keyboard(
+            profiles, user_id
+        )
 
-    method: bool = callback_data.method_answer
+        await callback.answer()
 
-    if method:
-        await callback.message.delete()
+        method: bool = callback_data.method_answer
 
-        await callback.message.answer(
+        if method:
+            await callback.message.delete()
+
+            await callback.message.answer(
+                text=LEXICON["select_account"], reply_markup=profiles_kb
+            )
+            return
+
+        await callback.message.edit_text(
             text=LEXICON["select_account"], reply_markup=profiles_kb
         )
-        return
-
-    await callback.message.edit_text(
-        text=LEXICON["select_account"], reply_markup=profiles_kb
-    )
+    except:
+        await callback.message.answer(text=LEXICON["db_error"], reply_markup=main_kb)
+    finally:
+        await database.close()
 
 
 @router.callback_query(ProfilesCallbackFactory.filter())
