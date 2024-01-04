@@ -23,7 +23,10 @@ async def main() -> None:
     storage: RedisStorage = RedisStorage(redis=redis)
 
     database: DatabaseMethods = DatabaseMethods()
-    database.create_tables()
+
+    await database.connect()
+    await database.create_tables()
+    await database.close()
 
     dp: Dispatcher = Dispatcher(
         bot=bot,

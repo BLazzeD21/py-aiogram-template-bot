@@ -1,8 +1,7 @@
 from aiogram.types import Message
 from aiogram import Router
-from aiogram.filters import Command, StateFilter
+from aiogram.filters import StateFilter
 from aiogram.fsm.state import default_state
-from aiogram.fsm.context import FSMContext
 
 from lexicon import LEXICON
 from keyboards.reply_keyboards import cancel_kb
