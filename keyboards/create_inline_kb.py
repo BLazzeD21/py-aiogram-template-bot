@@ -1,7 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from math import ceil
-from models.methods import DatabaseMethods
 
 from lexicon import LEXICON
 from keyboards.profiles_callbackFactory import (

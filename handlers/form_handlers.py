@@ -1,94 +1,26 @@
-from aiogram.types import CallbackQuery, Message, PhotoSize, InlineKeyboardMarkup
-from aiogram.filters import Command, StateFilter
+from aiogram.types import CallbackQuery, Message, PhotoSize
+from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import default_state
 from aiogram import Router, F
 from models.methods import DatabaseMethods
 
+from keyboards.inline_keyboards import sex_inline_kb, registration_inline_kb
 from keyboards.reply_keyboards import main_kb, cancel_kb
-from keyboards.inline_keyboards import (
-    sex_inline_kb,
-    registration_inline_kb,
-    settings_inline_kb,
-    profile_inline_kb,
-)
-from keyboards.create_inline_kb import create_back_to_page
 from lexicon import LEXICON
 from states import FSMRegistration
 
 router: Router = Router()
 
-# ------------------------- Functions -------------------------
 
+@router.callback_query(F.data == "form_button", StateFilter(default_state))
+async def process_form_button_press(callback: CallbackQuery, state: FSMContext) -> None:
+    await callback.message.delete()
 
-async def send_profile(
-    message: Message, user_data: tuple, keyboard: InlineKeyboardMarkup
-) -> None:
-    caption: str = LEXICON["get_profile_data"].format(
-        user_id=user_data[1],
-        username=user_data[2],
-        name=user_data[3],
-        age=user_data[4],
-        gender=user_data[5],
-        description=user_data[6],
-    )
-    await message.answer_photo(
-        photo=user_data[7],
-        caption=caption,
-        reply_markup=keyboard,
-    )
-
-
-async def show_user_profile(
-    message: Message, user_id: int, database: DatabaseMethods
-) -> None:
-    try:
-        await database.connect()
-        user_data: tuple = await database.get_profile(user_id)
-
-        if user_data:
-            await send_profile(message, user_data, settings_inline_kb)
-        else:
-            await message.answer(
-                text=LEXICON["not_registered"], reply_markup=registration_inline_kb
-            )
-    except:
-        await message.answer(text=LEXICON["db_error"], reply_markup=main_kb)
-    finally:
-        await database.close()
-
-
-async def show_another_users_profile(
-    callback: CallbackQuery, user_id: int, database: DatabaseMethods, page: int
-) -> None:
-    try:
-        await database.connect()
-        user_data: tuple = await database.get_profile(user_id)
-
-        keyboard: InlineKeyboardMarkup = create_back_to_page(page)
-
-        if user_data:
-            await callback.message.delete()
-            await send_profile(callback.message, user_data, keyboard)
-        else:
-            await callback.answer(text=LEXICON["not_exist"])
-    except:
-        await callback.message.answer(text=LEXICON["db_error"], reply_markup=main_kb)
-    finally:
-        await database.close()
-
-
-async def registration_user_profile(message: Message, state: FSMContext) -> None:
-    await message.answer(text=LEXICON["enter_name"], reply_markup=cancel_kb)
+    await callback.message.answer(text=LEXICON["enter_name"], reply_markup=cancel_kb)
     await state.set_state(FSMRegistration.fill_name)
 
-
-# ---------------------- Command handlers ----------------------
-
-
-@router.message(F.text == LEXICON["form_button"], StateFilter(default_state))
-async def process_registration_command(message: Message, state: FSMContext) -> None:
-    await registration_user_profile(message, state)
+    await callback.answer()
 
 
 @router.message(F.text == LEXICON["cancel_button"], StateFilter(default_state))
@@ -192,7 +124,9 @@ async def process_photo_sent(
 
         await state.clear()
 
-        await message.answer_sticker(LEXICON["form_completed_sticker"], reply_markup=main_kb)
+        await message.answer_sticker(
+            LEXICON["form_completed_sticker"], reply_markup=main_kb
+        )
         await message.answer(text=LEXICON["form_completed"])
     except:
         await message.answer(text=LEXICON["db_error"], reply_markup=main_kb)

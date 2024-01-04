@@ -9,8 +9,6 @@ from lexicon import LEXICON
 
 router: Router = Router()
 
-# ---------------------- Command handlers ----------------------
-
 
 @router.message(Command(commands="admin"), IsAdmin(), StateFilter(default_state))
 async def process_admin_command(message: Message) -> None:

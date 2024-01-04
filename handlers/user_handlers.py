@@ -1,20 +1,12 @@
 from aiogram.types import CallbackQuery, Message, InlineKeyboardMarkup
 from aiogram.filters import Command, CommandStart, StateFilter
-from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import default_state
 from aiogram import Router, F
-from models.methods import DatabaseMethods
 
-from handlers.form_handlers import (
-    show_user_profile,
-    registration_user_profile,
-    show_another_users_profile,
-)
+from models.methods import DatabaseMethods
+from utils import show_user_profile, show_another_users_profile
 from keyboards.reply_keyboards import main_kb
-from keyboards.inline_keyboards import (
-    main_inline_kb,
-    info_inline_kb,
-)
+from keyboards.inline_keyboards import main_inline_kb, info_inline_kb
 from keyboards.create_inline_kb import create_profiles_keyboard
 from keyboards.profiles_callbackFactory import (
     ProfilesCallbackFactory,
@@ -23,8 +15,6 @@ from keyboards.profiles_callbackFactory import (
 from lexicon import LEXICON, LEXICON_COMMANDS
 
 router: Router = Router()
-
-# ---------------------- Command handlers ----------------------
 
 
 @router.message(CommandStart(), StateFilter(default_state))
@@ -46,15 +36,9 @@ async def process_help_command(message: Message) -> None:
     await message.answer(text=help_message, reply_markup=main_kb)
 
 
-# ------------- Button handlers from ReplyKeyboards -------------
-
-
 @router.message(F.text == LEXICON["main_menu_button"], StateFilter(default_state))
 async def process_main_button_press(message: Message) -> None:
     await message.answer(text=LEXICON["main_menu_button"], reply_markup=main_inline_kb)
-
-
-# ---------------- Button handlers from Callbacks ----------------
 
 
 @router.callback_query(F.data == "back_btn", StateFilter(default_state))
@@ -94,7 +78,9 @@ async def process_delete_profile_press(
     try:
         await database.connect()
         await database.delete_profile(user_id)
-        await callback.message.answer_sticker(LEXICON["profile_deleted_sticker"], reply_markup=main_kb)
+        await callback.message.answer_sticker(
+            LEXICON["profile_deleted_sticker"], reply_markup=main_kb
+        )
         await callback.message.answer(text=LEXICON["profile_deleted"])
     except:
         await callback.message.answer(text=LEXICON["db_error"], reply_markup=main_kb)
@@ -110,15 +96,6 @@ async def process_profile_button_press(
 
     user_id: int = callback.message.chat.id
     await show_user_profile(callback.message, user_id, database)
-
-    await callback.answer()
-
-
-@router.callback_query(F.data == "form_button", StateFilter(default_state))
-async def process_form_button_press(callback: CallbackQuery, state: FSMContext) -> None:
-    await callback.message.delete()
-
-    await registration_user_profile(callback.message, state)
 
     await callback.answer()
 
@@ -157,9 +134,7 @@ async def change_page_press(
         await database.connect()
         profiles: list[tuple] = await database.get_profiles()
 
-        profiles_kb: InlineKeyboardMarkup = create_profiles_keyboard(
-            profiles, user_id
-        )
+        profiles_kb: InlineKeyboardMarkup = create_profiles_keyboard(profiles, user_id)
 
         await callback.answer()
 
