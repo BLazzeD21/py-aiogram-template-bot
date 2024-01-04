@@ -4,7 +4,11 @@
 ![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
+
+> ❗️ This version of the bot is not final, new functionality is being added
+
 # Template for creating a telegram bot using the aiogram framework
+
 This bot was created for educational purposes and is a template with examples of using various functionality of the aiogram 3 framework for creating telegram bots. In this example, a bot with a registration form is implemented. You can register, view your profile and view the profiles of other users. Try, study, change existing functionality and add new ones!
 
 **This template has:**
