@@ -72,6 +72,19 @@ deactivate
 - For windows - `py start.py`
 - For macOS & Linux - `python3 start.py`
 
+If you want the bot to automatically restart every time you save files, you can use the [nodemon](https://www.npmjs.com/package/nodemon) tool:
+
+```bash
+npm i -g nodemon
+```
+
+You can launch the bot via:
+
+```bash
+nodemon --exec py/python3 start.py
+```
+
+
 # Deploying a bot 💾
 
 ### 1. Docker installation
