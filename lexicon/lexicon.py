@@ -1,5 +1,5 @@
 LEXICON: dict[str, str] = {
-    "start_message": 'This bot was created for educational purposes and is a template with examples of using various functionality of the aiogram 3 framework for creating telegram bots. 🌿\n\n❓ Bot capabilities - <i>/help</i>\n\n🔗 Source: <a href="https://github.com/BLazzeD21/py-aiogram-template-bot">LINK</a>',
+    "start_message": 'This bot was created for educational purposes and is a template with examples of using various functionality of the aiogram 3 framework to create telegram bots. 🌿\n\n❓ Bot capabilities - <i>/help</i>\n\n🔗 Source: <a href="https://github.com/BLazzeD21/py-aiogram-template-bot">LINK</a>',
     "help_message": "<b>🤖 Available bot commands</b>\n\n",
     "help_add": "➖ {command} - {description}\n",
     "other": "This action does nothing 👽",
